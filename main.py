@@ -10,7 +10,7 @@ def main():
     serverPort = 12000  # define server point
     serverSocket.bind(('', serverPort))  # binds the ServerSocket to the specified socket address, i.e. IP address and port number.
 
-    # Now we will defines the length of the backlog queue( e.g. in our case 1)
+    # Now we will define the length of the backlog queue( e.g. in our case 1)
     # which is the number of incoming connections that have been completed by the TCP/IP stack but not yet accepted by the application.
     # In the socket, server listen to connection request from clients
     serverSocket.listen(1)
@@ -19,17 +19,17 @@ def main():
     while True:
         # Establish the connection
         print('Ready to serve...')
-        # Server wait for the connection requests from clients. The server creates a connection socket to the client
+        # Server waits for the connection requests from clients. The server creates a connection socket to the client
         connectionSocket, addr = serverSocket.accept()  # Filled in
         try:
-            # Get the massage from the server and decode it (reading bytes from the socket)
+            # Get a massage from the client and decode it (reading bytes from the socket)
             message = connectionSocket.recv(2048).decode()  # Filled in
             filename = message.split()[1]
             f = open(filename[1:])
             outputdata = f.read()  # Filled in
             # Send one HTTP header line into socket
             message = 'HTTP/1.1 200 OK \r\n\r\n'
-            # Send bytes inside the socket
+            # Send the encoded massage (as bytes) inside the socket
             connectionSocket.send(message.encode())  # Filled in
 
             # Send the content of the requested file to the client
@@ -45,7 +45,7 @@ def main():
 
             # Close client socket
             connectionSocket.close()  # Filled in
-    serverSocket.close()  # close the connection socket to specific client (not the entry client).
+    serverSocket.close()  # close the connection socket to specific client (not the entry socket).
     sys.exit()  # Terminate the program after sending the corresponding data
 
 
